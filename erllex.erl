@@ -14,11 +14,10 @@ tokenize(BinaryString, Rules) ->
     ConcatRules = concat_rules(Rules),
     {ok, CompiledRules} = re:compile(ConcatRules, [anchored]),
     {namelist, Namelist} = re:inspect(CompiledRules, namelist),
-    ReversedTokens = get_tokens(BinaryString, CompiledRules, Namelist, []),
-    lists:reverse(ReversedTokens).
+    get_tokens(BinaryString, CompiledRules, Namelist, []).
 
 get_tokens(<<>>, _Rules, _Namelist, Acc) ->
-    Acc;
+     lists:reverse(Acc);
 get_tokens(BinaryString, Rules, Namelist, Acc) ->
     {match, Matchlist} = re:run(BinaryString,Rules,[{capture,all_names,binary}]),
     Token = extract_token(Namelist, Matchlist),
