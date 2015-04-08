@@ -31,7 +31,7 @@ get_tokens(BinaryString, Rules, Namelist, Acc) ->
 concat_rules(NaiveRuleset) ->
     lists:foldl(
         fun(Rule, Acc) ->
-            Acc ++ Rule ++ "|"
+            Rule ++ "|" ++ Acc
         end,
         [],
         NaiveRuleset
