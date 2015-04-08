@@ -20,7 +20,7 @@ get_tokens(<<>>, _Rules, _Namelist, Acc) ->
      lists:reverse(Acc);
 get_tokens(BinaryString, Rules, Namelist, Acc) ->
     {match, Matchlist} = re:run(BinaryString,Rules,[{capture,all_names,binary}]),
-    Token = extract_token(Namelist, Matchlist),
+    {ok, Token} = extract_token(Namelist, Matchlist),
     {_, Matched} = Token,
     MatchedLength = byte_size(Matched),
     <<_Matched:MatchedLength/binary, NewBinaryString/binary>> = BinaryString,
@@ -40,6 +40,6 @@ concat_rules(NaiveRuleset) ->
 extract_token([_Name | Namelist], [<<>> | Matchlist]) ->
     extract_token(Namelist, Matchlist);
 extract_token([Name | _Namelist], [Match | _Matchlist]) ->
-    {Name, Match};
+    {ok, {Name, Match}};
 extract_token(_, _) ->
     {error, nomatch}.
