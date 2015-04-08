@@ -1,5 +1,5 @@
 -module(erllex).
--export([get_rules/0, tokenize/2]).
+-export([get_rules/0, tokenize/1, tokenize/2]).
 
 get_rules() -> 
     [
@@ -9,6 +9,9 @@ get_rules() ->
         "(?P<MINUS>\\-)",
         "(?P<WHITESPACE>\\s)"
     ].
+
+tokenize(BinaryString) ->
+    tokenize(BinaryString, erllex:get_rules()).
 
 tokenize(BinaryString, Rules) ->
     ConcatRules = concat_rules(Rules),
