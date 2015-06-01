@@ -1,2 +1,3 @@
-*.beam
-
+ebin/
+doc/
+.erllex.plt
